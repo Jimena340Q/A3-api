@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(EnvironmentTypeSeeder::class);
         //$this->call(LocationSeeder::class);
        // $this->call(LearningEnvironmentSeeder::class);
-       $this->call(SchedulingEnvironmentSeeder::class);
+       //$this->call(SchedulingEnvironmentSeeder::class);
        
 
         /*
