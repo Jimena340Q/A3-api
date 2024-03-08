@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('environment_type', function (Blueprint $table) {
             $table->id();
-            $table->string('name') ->comment('Nombre');
-            $table->string('email')->unique() ->comment('Correo');
-            $table->string('password')->comment('Contraseña');
-            $table->rememberToken()->comment('token de recuperación');
+            $table->string('description')->comment('descripción del ambiente');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('environment_type');
     }
 };
