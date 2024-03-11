@@ -51,6 +51,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
+        $courses->load(['career']);
         return response()->json($courses, Response::HTTP_OK);
     }
 
@@ -78,7 +79,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $course->load(['career']);
         return response()->json($course, Response::HTTP_OK);
+        
     }
 
     /**
