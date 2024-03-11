@@ -41,6 +41,7 @@ class SchedulingEnvironmentController extends Controller
                 'data' => $request->all()
             ], Response::HTTP_BAD_REQUEST);
         }
+        return $data;
     }
     /**
      * Display a listing of the resource.
@@ -113,9 +114,7 @@ class SchedulingEnvironmentController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    /**
-    * Agrega una nueva actividad
-    */
+    
 
     
 

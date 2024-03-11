@@ -1,13 +1,16 @@
 <?php
 
-<<<<<<< HEAD
+use App\Http\Controllers\CareerController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnvironmentTypeController;
+use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\LearningEnvironmentController;
 use App\Models\EnvironmentType;
 use App\Models\Instructor;
 use App\Models\LearningEnvironment;
-=======
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SchedulingEnvironmentController;
->>>>>>> e3f21cdf7acd3a7c04555b91180456eb584e5f49
+use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,12 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-<<<<<<< HEAD
-Route::apiResource('environmet_type',EnvironmentType::class);
-Route::apiResource('instructor',Instructor::class);
-Route::apiResource('learning_environment',LearningEnvironment::class);
-=======
+
+Route::apiResource('environmet_type',EnvironmentTypeController::class);
+Route::apiResource('instructor',InstructorController::class);
+Route::apiResource('learning_environment',LearningEnvironmentController::class);
 Route::apiResource('location' , LocationController::class);
 Route::apiResource('scheduling_environment' , SchedulingEnvironmentController::class);
+Route::apiResource('career', CareerController::class);
+Route::apiResource('course',CourseController::class);
 
->>>>>>> e3f21cdf7acd3a7c04555b91180456eb584e5f49
+
