@@ -68,10 +68,10 @@ class InstructorController extends Controller
             return $data;
         }
 
-        $intructor = Instructor::create($request->all());
+        $instructor = Instructor::create($request->all());
         $response = [
             'message' => 'Registro creado exitosamente',
-            'intructor' => $intructor
+            'instructor' => $instructor
         ];
 
         return response()->json($response, Response::HTTP_CREATED);
@@ -80,15 +80,15 @@ class InstructorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Instructor $intructor)
+    public function show(Instructor $instructor)
     {
-        return response()->json($intructor, Response::HTTP_OK);
+        return response()->json($instructor, Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Instructor $intructor)
+    public function update(Request $request, Instructor $instructor)
     {
         $data = $this->applyvalidator($request);
         if (!empty($data))
@@ -96,10 +96,10 @@ class InstructorController extends Controller
             return $data;
         }
 
-        $intructor -> update($request ->all(''));
+        $instructor -> update($request ->all(''));
         $response = [
             'message' => 'Registro actualizado exitosamente',
-            'intructor' => $intructor
+            'instructor' => $instructor
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -108,12 +108,12 @@ class InstructorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Instructor $intructor)
+    public function destroy(Instructor $instructor)
     {
-        $intructor -> delete();
+        $instructor -> delete();
         $response = [
             'message' => 'Registro eliminado exitosamente',
-            'intructor' => $intructor->id
+            'instructor' => $instructor->id
         ];
 
         return response()->json($response, Response::HTTP_OK);
