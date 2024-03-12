@@ -25,17 +25,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+}); */
+Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::apiResource('career', CareerController::class);
+    Route::apiResource('course',CourseController::class);
+    Route::apiResource('instructor',InstructorController::class);
+    Route::apiResource('environmet_type',EnvironmentTypeController::class);
+    Route::apiResource('learning_environment',LearningEnvironmentController::class);
+    Route::apiResource('location' , LocationController::class);
+    Route::apiResource('scheduling_environment' , SchedulingEnvironmentController::class);
 });
 
 
-Route::apiResource('environmet_type',EnvironmentTypeController::class);
-Route::apiResource('instructor',InstructorController::class);
-Route::apiResource('learning_environment',LearningEnvironmentController::class);
-Route::apiResource('location' , LocationController::class);
-Route::apiResource('scheduling_environment' , SchedulingEnvironmentController::class);
-Route::apiResource('career', CareerController::class);
-Route::apiResource('course',CourseController::class);
+
 
 
