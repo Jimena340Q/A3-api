@@ -3,9 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    private $rules = [
+        'name'=>'required|string|max:255',
+        'email'=>'required|string|email|max:255|unique:users',
+        'password'=>'required|string|min:8|max:255',
+        'password_confirmation'=>'required|same:password'
+    ];
+    
+    private $traductionAttributes = array(
+        'name'=> 'nombre',
+        'password'=>'contraseña',
+        'password_confirmation' => 'confirmar contraseña'
+    );
+
+    public function applyvalidator(Request $request)
+    {
+        $validator = Validator::make($request->all(), $this->rules);
+        $validator->setAttributeNames($this->traductionAttributes);
+        $data = [];
+        if ($validator->fails()) 
+        {
+            $data = response()->json([
+                'errors'=>$validator->errors(),
+                'data' =>$request->all()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return $data;
+      }
     /**
      * Display a listing of the resource.
      */
@@ -45,4 +77,44 @@ class AuthController extends Controller
     {
         //
     }
+
+    public function login(Request $request)
+    {
+        
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+
+        if(Auth::attempt($credentials))
+        {
+           $user = Auth::user();
+           $token = $user->createToken('token')->plainTextToken;
+       
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+            'token_type' => 'Bearer'
+        ], Response::HTTP_OK);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'Credcenciales incorrectas'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        return response()->json([
+            'message' => 'Sesión cerrada exitosamente'
+        ], Response::HTTP_OK);
+    }
+
+   
+   
 }
