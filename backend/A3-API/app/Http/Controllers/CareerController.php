@@ -61,7 +61,7 @@ class CareerController extends Controller
             'message' => 'Registro creado exitosamente',
             'career' => $career
         ];
-        return response()->json($request, Response::HTTP_CREATED);
+        return response()->json($response, Response::HTTP_CREATED);
     }
 
     /**
@@ -69,7 +69,7 @@ class CareerController extends Controller
      */
     public function show(Career $career)
     {
-        $career->load(['technician', 'type_activity']);
+       
         return response()->json($career, Response::HTTP_OK);
     }
 
@@ -89,7 +89,7 @@ class CareerController extends Controller
             'message' => 'Registro actualizado exitosamente',
             'career' => $career
         ];
-        return response()->json($request, Response::HTTP_OK);
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
