@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
-use Monolog\Handler\IFTTTHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
@@ -30,7 +30,32 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        //
+        $this->reportable(function (Throwable $e) {
+            //
+        });
+
+        $this->renderable(function (NotFoundHttpException $e , $request) 
+        {
+            // Añade el prefijo api/ a la lista de urls
+            $urlFinal = preg_filter('/^/' , 'api/', $this->url);
+
+            // Añade el sufijo /* a la lista de urls
+            $urlFinal = preg_filter('/$/' , '/*', $this->url);
+
+            if($request->is($urlFinal))
+            {
+                return response()->json([
+                    'message' => 'URL no encontrada'
+                ], Response::HTTP_NOT_FOUND) ;
+            }
+        });
+        $this->renderable(function (MethodNotAllowedHttpException $e , $request) 
+        {
+            
+                return response()->json([
+                    'message' => 'Metodo no encontrado o no soportado'
+                ], Response::HTTP_METHOD_NOT_ALLOWED) ;
+        });
     }
 
     public function render($request, Throwable $exception)
